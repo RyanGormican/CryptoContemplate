@@ -1,22 +1,22 @@
 <script>
   import { onMount } from 'svelte';
   import 'bootstrap/dist/css/bootstrap.min.css';
-  import Feedback from './Feedback/Feedback.svelte';  // Import the Feedback component
+  import Feedback from './Feedback/Feedback.svelte';
 
   let assets = [];
   let isLoading = true;
   let error = null;
-  let isModalOpen = false; // State to control modal visibility
+  let isModalOpen = false;
 
   const toggleFeedbackModal = () => {
-  isModalOpen = !isModalOpen; // Toggle the modal state
+  isModalOpen = !isModalOpen;
   };
 
   onMount(async () => {
   try {
   const response = await fetch('https://api.coincap.io/v2/assets');
   const data = await response.json();
-  assets = data.data; // Store the fetched assets
+  assets = data.data;
   } catch (err) {
   error = 'Failed to fetch data';
   } finally {
@@ -31,17 +31,16 @@
 
     <span class="links">
       <a href="https://www.linkedin.com/in/ryangormican/">
-        <span style="color: #0e76a8;" class="mdi--linkedin"></span>
+        <span style="color: #0e76a8;height: 5vh;width: 2vw;" class="mdi--linkedin"></span>
       </a>
       <a href="https://github.com/RyanGormican/CryptoContemplate">
-        <span style="color: #e8eaea;" class="mdi--github"></span>
+        <span style="color: #e8eaea;height: 5vh;width: 2vw;" class="mdi--github"></span>
       </a>
       <a href="https://ryangormicanportfoliohub.vercel.app/">
-        <span style="color: #199c35;" class="teenyicons--computer-outline"></span>
+        <span style="color: #199c35; height: 5vh;width: 2vw;" class="teenyicons--computer-outline"></span>
       </a>
-      <div class="cursor-pointer" on:click={"toggleFeedbackModal"}>
-        <!-- Use toggle function -->
-        <span class="material-symbols--feedback"></span>
+      <div class="cursor-pointer" on:click={toggleFeedbackModal}>
+        <span class="material-symbols--feedback" style="height: 5vh; width: 2vw;"></span>
       </div>
     </span>
 
@@ -86,8 +85,9 @@
     {/if}
   </div>
 
-  <!-- Include the Feedback Modal component -->
-  <Feedback {isModalOpen} setIsModalOpen={"toggleFeedbackModal"} />
+  {#if isModalOpen}
+  <Feedback {isModalOpen} {toggleFeedbackModal} />
+  {/if}
 </main>
 
 <style>
