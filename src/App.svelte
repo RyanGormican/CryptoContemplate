@@ -12,7 +12,7 @@
   isModalOpen = !isModalOpen;
   };
 
-  onMount(async () => {
+  const fetchData = async () => {
   try {
   const response = await fetch('https://api.coincap.io/v2/assets');
   const data = await response.json();
@@ -22,6 +22,11 @@
   } finally {
   isLoading = false;
   }
+  };
+
+
+  onMount(() => {
+  fetchData();
   });
 </script>
 
@@ -39,10 +44,13 @@
       <a href="https://ryangormicanportfoliohub.vercel.app/">
         <span style="color: #199c35; height: 5vh;width: 2vw;" class="teenyicons--computer-outline"></span>
       </a>
-      <div class="cursor-pointer" on:click={toggleFeedbackModal}>
+      <div class="cursor-pointer" on:click={"toggleFeedbackModal"}>
         <span class="material-symbols--feedback" style="height: 5vh; width: 2vw;"></span>
       </div>
     </span>
+
+  
+    <button class="btn btn-primary mt-4" on:click={fetchData}>Refresh</button>
 
     {#if isLoading}
     <p>Loading...</p>
@@ -70,7 +78,7 @@
           <td>{asset.symbol}</td>
           <td class={"parseFloat(asset.changePercent24Hr"
             < 0 ? 'text-danger' : 'text-success'}>
-                ${parseFloat(asset.priceUsd).toFixed(2)}
+                  ${parseFloat(asset.priceUsd).toFixed(2)}
           </td>
           <td>{parseFloat(asset.supply).toLocaleString()}</td>
           <td>{asset.maxSupply ? parseFloat(asset.maxSupply).toLocaleString() : 'N/A'}</td>
