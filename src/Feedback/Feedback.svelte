@@ -28,7 +28,7 @@
   const handleProjectClick = async () => {
     try {
       await addDoc(collection(firestore2, 'feedback'), {
-        project: 'UserUnit',
+        project: 'CryptoContemplate',
         timestamp: serverTimestamp(),
       });
     } catch (error) {
